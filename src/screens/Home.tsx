@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Center, FlatList, Heading, HStack, IconButton, Text, useTheme, VStack } from 'native-base';
 import { SignOut, ChatTeardropText } from 'phosphor-react-native';
 
@@ -10,37 +11,42 @@ import { Order, OrderProps } from '../components/Order'
 export function Home() {
   const [ statusSelected, setStatusSelected ] = useState<'open' | 'closed'>('open');
   const [ orders, setOrders ] = useState<OrderProps[]>([
-    // {
-    //   id: '1',
-    //   patrimony: '123',
-    //   when: '18/07/2022 às 10:00',
-    //   status: 'open'
-    // },
-    // {
-    //   id: '2',
-    //   patrimony: '456',
-    //   when: '20/07/2022 às 15:00',
-    //   status: 'closed'
-    // },
-    // {
-    //   id: '3',
-    //   patrimony: '789',
-    //   when: '18/07/2022 às 10:00',
-    //   status: 'open'
-    // },
-    // {
-    //   id: '4',
-    //   patrimony: '4101112',
-    //   when: '20/07/2022 às 15:00',
-    //   status: 'closed'
-    // },
+    {
+      id: '1',
+      patrimony: '123',
+      when: '18/07/2022 às 10:00',
+      status: 'open'
+    },
+    {
+      id: '2',
+      patrimony: '456',
+      when: '20/07/2022 às 15:00',
+      status: 'closed'
+    },
+    {
+      id: '3',
+      patrimony: '789',
+      when: '18/07/2022 às 10:00',
+      status: 'open'
+    },
+    {
+      id: '4',
+      patrimony: '4101112',
+      when: '20/07/2022 às 15:00',
+      status: 'closed'
+    },
     
   ]);
 
+  const navigation = useNavigation();
   const { colors } = useTheme();
 
   function handleNewOrder(){
-    
+    navigation.navigate('new')
+  }
+
+  function handleOpenDetails(orderId: string){
+    navigation.navigate('details', {orderId});
   }
 
   return (
@@ -70,10 +76,10 @@ export function Home() {
           alignItems="center"
         >
           <Heading color="gray.100">
-            Meus chamados
+            Solicitações
           </Heading>
           <Text color="gray.200">
-            3
+            {orders.length}
           </Text>
         </HStack>
 
@@ -95,7 +101,7 @@ export function Home() {
         <FlatList
           data={orders}
           keyExtractor={item => item.id}
-          renderItem={({item}) => <Order data={item}/>}
+          renderItem={({item}) => <Order data={item} onPress={() => handleOpenDetails(item.id)}/>}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 100 }}
           ListEmptyComponent={() => (
@@ -109,7 +115,7 @@ export function Home() {
           )}
         />
 
-        <Button title='Nova solicitação' />
+        <Button title='Nova solicitação' onPress={handleNewOrder}/>
       </VStack>
 
     </VStack>
