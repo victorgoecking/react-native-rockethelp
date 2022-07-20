@@ -11,6 +11,7 @@ import { Button } from '../components/Button';
 
 
 export function Signin(){
+  const [ isLoading, setIsLoading ] = useState(false);
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
@@ -21,6 +22,25 @@ export function Signin(){
       return Alert.alert('Entrar', 'Informe e-mail e senha!');
     }
 
+    setIsLoading(true);
+
+    auth()
+    .signInWithEmailAndPassword(email, password)
+    .catch((error) => {
+      console.log(error);
+      setIsLoading(false);
+
+      if(error.code === 'auth/invalid-email'){
+        return Alert.alert('Entrar', 'E-mail inválido.');
+      }
+      if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password'){
+        return Alert.alert('Entrar', 'E-mail ou senha inválida.');
+      }
+
+      return Alert.alert('Entrar', 'Não foi possivel acessar.')
+
+    });
+
 
     console.log(email, password);
   }
@@ -29,7 +49,7 @@ export function Signin(){
       <Logo />
       
       <Heading color={'gray.100'} fontSize="xl" mt={20} mb={6}>
-        Acesse sua conta {email}
+        Acesse sua conta
       </Heading>
 
       <Input 
@@ -46,7 +66,12 @@ export function Signin(){
         onChangeText={setPassword}
       />
 
-      <Button title="Entrar" w="full" onPress={handleSignIn}/>
+      <Button 
+        title="Entrar" 
+        w="full" 
+        onPress={handleSignIn}
+        isLoading={isLoading}
+      />
     </VStack>
   )
 }
