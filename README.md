@@ -7,9 +7,8 @@
 O projeto **Rocket Help** é uma especialização em React Native para desenvolvedores alcançarem seu próximo nível.
 
 # 📱 Layout
-<div align="center">
-  ![CapaRockethelp](https://user-images.githubusercontent.com/9842243/182860443-44b68f54-dec9-4f31-b3c3-21c7deb42569.png)
-</div>
+![CapaRockethelp](https://user-images.githubusercontent.com/9842243/182862397-70906bee-97b5-46dc-a8d1-9095263262f7.png)
+
 [Layout do projeto no Figma](https://www.figma.com/community/file/1130846653327904117)
 
 # 🤔 Tecnologias usadas
